@@ -1,5 +1,7 @@
-1. Gridlines for clarity            - DONE
-2. Initial Configuration clickable  - DONE
-3. Basic Reseting option            - DONE
-4. Zoom in and out
-5. Fix Color Coding                 - DONE
+Gridlines for clarity            - DONE
+Initial Configuration clickable  - DONE
+Basic Reseting option            - DONE
+Fix Color Coding                 - DONE
+Zoom in and out                  - 
+Make Object Oritneted            - 
+Infinite Grid (Wrap Around)      - 

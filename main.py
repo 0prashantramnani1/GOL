@@ -1,4 +1,3 @@
-import pygame
 import numpy
 import time
 import copy
@@ -9,7 +8,7 @@ pygame.init() # Also initialises display
 clock = pygame.time.Clock()
 
 surface = pygame.display.set_mode((WIDTH, HEIGHT))
-surface.fill(BLUE)
+surface.fill(BACKGROUND)
 
 grid = [[0 for i in range(NUM_BLOCKS_W)] for j in range(NUM_BLOCKS_H)]
 
@@ -59,7 +58,7 @@ def draw_grid():
     for h in range(0, HEIGHT, BLOCKSIZE):
         for w in range(0, WIDTH, BLOCKSIZE):
             Rect = pygame.Rect(w, h, BLOCKSIZE, BLOCKSIZE)
-            pygame.draw.rect(surface, BLUE, Rect)
+            pygame.draw.rect(surface, BACKGROUND, Rect)
             pygame.draw.rect(surface, WHITE, Rect, width=1)
             grid[h//BLOCKSIZE][w//BLOCKSIZE] = 0
 
@@ -68,9 +67,9 @@ def update_grid():
         for w in range(len(grid[0])):
             Rect = pygame.Rect(w*BLOCKSIZE, h*BLOCKSIZE, BLOCKSIZE, BLOCKSIZE)
             if grid[h][w] == 1:
-                pygame.draw.rect(surface, YELLOW, Rect)
+                pygame.draw.rect(surface, ALIVE, Rect)
             else:
-                pygame.draw.rect(surface, BLUE, Rect)    
+                pygame.draw.rect(surface, BACKGROUND, Rect)    
             pygame.draw.rect(surface, WHITE, Rect, width=1)
     
     new_life_pos()
@@ -84,7 +83,8 @@ def color_tile(pos):
     grid[block_h][block_w] = 1
 
     Rect = pygame.Rect(block_w*BLOCKSIZE, block_h*BLOCKSIZE, BLOCKSIZE, BLOCKSIZE)
-    pygame.draw.rect(surface, YELLOW, Rect)
+    pygame.draw.rect(surface, ALIVE, Rect)
+    pygame.draw.rect(surface, WHITE, Rect, width=1)
 
 
 
@@ -93,7 +93,11 @@ running = True
 draw_grid()
 
 
-if __name__ == '__main__':
+def main():
+    global running
+    
+    life = False
+
     while running:
         for event in pygame.event.get():
             # print(event)
@@ -102,8 +106,15 @@ if __name__ == '__main__':
             if event.type == pygame.MOUSEBUTTONDOWN:
                 color_tile(event.pos)
             if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
-                update_grid()
+                life = ~life
             if event.type == pygame.KEYDOWN and event.key == pygame.K_c:
                 draw_grid()
+        if life:
+            update_grid()
         pygame.display.flip()
+        clock.tick(3)
         
+
+if __name__ == '__main__':
+    main()
+    
